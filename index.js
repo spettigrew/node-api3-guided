@@ -1,5 +1,6 @@
 const express = require("express")
 const helmet = require("helmet")
+const agent = require("./middleware/agent")
 const logger = require("./middleware/logger")
 // const morgan = require("morgan")
 const hubRouter = require("./routers/hub")
@@ -9,6 +10,7 @@ const server = express()
 
 server.use(helmet())
 server.use(logger())
+server.use(agent("insomnia"))
 // server.use(morgan("short"))
 
 server.use(express.json())

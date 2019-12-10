@@ -33,20 +33,7 @@ router.get("/", (req, res) => {
 })
 
 router.get("/:id", (req, res) => {
-  hubs.findById(req.params.id)
-    .then(hub => {
-      if (hub) {
-        res.status(200).json(hub)
-      } else {
-        res.status(404).json({ message: "Hub not found" })
-      }
-    })
-    .catch(error => {
-      console.log(error)
-      res.status(500).json({
-        message: "Error retrieving the hub",
-      })
-    })
+ res.json(req.hub)
 })
 
 router.post("/", (req, res) => {
