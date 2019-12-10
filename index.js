@@ -26,6 +26,11 @@ server.use((req, res) => {
   })
 })
 
+server.use((err, req, res, next) => {
+  console.log(err)
+  res.status(500).json({ message: "An internal error occurred" })
+})
+
 server.listen(4000, () => {
   console.log("\n*** Server Running on http://localhost:4000 ***\n")
 })

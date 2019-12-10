@@ -1,4 +1,5 @@
 const express = require("express")
+const { validateHubId } = require("../middleware/validate")
 const messageRouter = require("./message")
 const hubs = require("../hubs/hubs-model.js")
 
@@ -26,17 +27,18 @@ router.get("/", (req, res) => {
     })
     .catch(error => {
       console.log(error)
-      res.status(500).json({
-        message: "Error retrieving the hubs",
-      })
+      next(error)
+      // res.status(500).json({
+      //   message: "Error retrieving the hubs",
+      // })
     })
 })
 
-router.get("/:id", (req, res) => {
+router.get("/:id", validateHubId(), (req, res) => {
  res.json(req.hub)
 })
 
-router.post("/", (req, res) => {
+router.post("/", validateHubData(), (req, res) => {
   if (!req.body.name) {
     return res.status(400).json({ message: "Missing hub name" })
   }
@@ -47,24 +49,23 @@ router.post("/", (req, res) => {
     })
     .catch(error => {
       console.log(error)
-      res.status(500).json({
-        message: "Error adding the hub",
-      })
+      next(error)
+      // res.status(500).json({
+      //   message: "Error adding the hub",
+      // })
     })
 })
 
-router.put("/:id", (req, res) => {
+router.put("/:id", validateHubId(), (req, res) => {
   if (!req.body.name) {
     return res.status(400).json({ message: "Missing hub name" })
   }
 
-  hubs.update(req.params.id, req.body)
+  hubs.update(req.hub.id, req.body)
     .then(hub => {
       if (hub) {
         res.status(200).json(hub)
-      } else {
-        res.status(404).json({ message: "The hub could not be found" })
-      }
+      } 
     })
     .catch(error => {
       console.log(error)
@@ -74,20 +75,19 @@ router.put("/:id", (req, res) => {
     })
 })
 
-router.delete("/:id", (req, res) => {
-  hubs.remove(req.params.id)
+router.delete("/:id", validateHubId(), (req, res) => {
+  hubs.remove(req.hub.id)
     .then(count => {
       if (count > 0) {
         res.status(200).json({ message: "The hub has been nuked" })
-      } else {
-        res.status(404).json({ message: "The hub could not be found" })
-      }
+      } 
     })
     .catch(error => {
       console.log(error)
-      res.status(500).json({
-        message: "Error removing the hub",
-      })
+      next(error)
+      // res.status(500).json({
+      //   message: "Error removing the hub",
+      // })
     })
 })
 
