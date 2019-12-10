@@ -15,7 +15,7 @@ router.use("/:id/messages", messageRouter)
 router.get("/", (req, res) => {
   const opts = {
     // These values all comes from the URL's query string
-    // (everthing after the question mark)
+    // (everything after the question mark)
     limit: req.query.limit,
     sortby: req.query.sortby,
     sortdir: req.query.sortdir,
