@@ -3,7 +3,7 @@ const hubs = require("../hubs/hubs-model.js")
 
 const router = express.Router({
 	// This allows us to pull in the hub ID from
-	// the parent router's url paramters.
+	// the parent router's url parameters.
 	// Otherwise we can't get the hub id from the
 	// child router.
 	mergeParams: true,
