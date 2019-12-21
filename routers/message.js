@@ -3,7 +3,7 @@ const hubs = require("../hubs/hubs-model.js")
 
 const router = express.Router({
 	// This allows us to pull in the hub ID from
-	// the parent router's url paramters.
+	// the parent router's url parameters.
 	// Otherwise we can't get the hub id from the
 	// child router.
 	mergeParams: true,
@@ -16,9 +16,10 @@ router.get("/", (req, res) => {
 			res.json(data)
 		})
 		.catch(err => {
-			res.status(500).json({
-				message: "Could not get hub messages",
-			})
+			// res.status(500).json({
+			// 	message: "Could not get hub messages",
+			// })
+			next(err)
 		})
 })
 
@@ -39,9 +40,10 @@ router.get("/:messageId", (req, res) => {
 			}
 		})
 		.catch(err => {
-			res.status(500).json({
-				message: "Could not get hub message",
-			})
+			// res.status(500).json({
+			// 	message: "Could not get hub message",
+			// })
+			next(err)
 		})
 })
 
@@ -68,9 +70,10 @@ router.post("/", (req, res) => {
 			res.status(201).json(data)
 		})
 		.catch(err => {
-			res.status(500).json({
-				message: "Could not create hub message",
-			})
+			// res.status(500).json({
+			// 	message: "Could not create hub message",
+			// })
+			next(err)
 		})
 })
 
